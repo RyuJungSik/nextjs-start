@@ -1,29 +1,44 @@
 import axios from 'axios';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
+import { Loader } from 'semantic-ui-react';
 import Item from '../../src/component/Item';
 
 const Post = () => {
     const router = useRouter()
     const { id } = router.query
-    const [item, setItem]=useState([]);
-  
-    const API_URL=`http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+    const [item, setItem] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    function getData(){
+    const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+
+    function getData() {
         axios.get(API_URL)
-        .then(res=>{
-            setItem(res.data);
-        })
+            .then(res => {
+                setItem(res.data);
+                setIsLoading(false);
+            })    
     };
 
     useEffect(() => {
-        if(id && id>0){
+        if (id && id > 0) {
             getData();
         }
     }, [id])
 
-    return(<Item item={item}/>);
-  };
+    return (
+        <>
+            {isLoading ? (
+                <div style={{ padding: "300px 0px" }}>
+                    <Loader inline="centered" active>
+                        Loading
+                    </Loader>
+                </div>
+            ) : (
+            <Item item={item} />
+            )}
+        </>
+    );
+};
 
-  export default Post;
+export default Post;
