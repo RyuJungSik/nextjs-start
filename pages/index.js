@@ -25,6 +25,7 @@ export default function Home() {
     <div>
       <Head>
         <title>무야호~</title>
+        <meta name="description" content="무야호  홈입니다."></meta>
       </Head>
       {isLoading && (
         <div style={{padding : "300px 0px"}}>
@@ -50,3 +51,4 @@ export default function Home() {
     </div>
   );
 }
+
